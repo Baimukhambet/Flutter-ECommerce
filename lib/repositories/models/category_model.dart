@@ -4,4 +4,11 @@ class Category {
   Category({required this.name});
 }
 
-enum Cat { bad, sneakers, tshirt, hoodie }
+enum MainCategory { all, woman, man, kid }
+
+extension ParseToString on MainCategory {
+  String toStr() {
+    String str = this.name;
+    return "${str[0].toUpperCase()}${str.substring(1).toLowerCase()}";
+  }
+}

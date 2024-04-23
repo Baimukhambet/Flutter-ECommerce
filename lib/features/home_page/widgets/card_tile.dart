@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CardTile extends StatelessWidget {
-  CardTile({super.key});
+  const CardTile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class CardTile extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -40,7 +39,8 @@ class CardTile extends StatelessWidget {
                           Text("\$100", style: theme.textTheme.titleMedium),
                         ],
                       ),
-                      Icon(Icons.shopping_bag_rounded, color: Colors.white)
+                      const Icon(Icons.shopping_bag_rounded,
+                          color: Colors.white)
                     ],
                   ),
                 ],

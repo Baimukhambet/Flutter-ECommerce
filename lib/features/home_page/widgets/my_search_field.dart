@@ -9,18 +9,19 @@ class MySearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // margin: const EdgeInsets.all(16),
-      child: TextField(
-        onTap: onTap,
-        readOnly: readOnly,
-        style: const TextStyle(fontSize: 14),
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.search),
-          hintText: "Search",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+    return TextField(
+      onTap: onTap,
+      readOnly: readOnly,
+      style: const TextStyle(fontSize: 14),
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.search),
+        hintText: "Search",
+        contentPadding: const EdgeInsets.symmetric(vertical: 0),
+        focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.circular(16)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
         ),
       ),
     );

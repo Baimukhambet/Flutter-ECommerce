@@ -27,9 +27,9 @@ class MyNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.all(8),
+        margin: const EdgeInsets.all(8),
         child: GNav(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
           onTabChange: onTabChange,
           activeColor: Colors.white,
           tabs: tabs,

@@ -2,11 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/features/home_page/widgets/card_tile.dart';
 import 'package:shop_app/features/home_page/widgets/category_tile.dart';
 import 'package:shop_app/features/home_page/widgets/my_search_field.dart';
+import 'package:shop_app/features/search_page/search_screen.dart';
+import 'package:shop_app/repositories/models/category_model.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({
+class HomeScreen extends StatefulWidget {
+  HomeScreen({
     super.key,
   });
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final List<MainCategory> cats = [
+    MainCategory.all,
+    MainCategory.woman,
+    MainCategory.man,
+    MainCategory.kid
+  ];
+
+  int _currentCategoryIndex = 0;
+
+  void _categoryTileTapped(int index) {
+    setState(() {
+      _currentCategoryIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,18 +37,27 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         children: [
           MySearchField(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SearchScreen(),
+              ));
+            },
             readOnly: true,
           ),
-          Container(
+          SizedBox(
             // padding: EdgeInsets.only(left: 8),
             height: 72,
             child: Center(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 10,
+                itemCount: cats.length,
                 itemBuilder: (context, index) {
-                  return CategoryTile();
+                  final bool active = (index == _currentCategoryIndex);
+                  return CategoryTile(
+                    title: cats[index].toStr(),
+                    isActive: active,
+                    onTap: () => _categoryTileTapped(index),
+                  );
                 },
               ),
             ),
@@ -37,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                   crossAxisCount: 2, childAspectRatio: 0.8),
               itemCount: 10,
               itemBuilder: (context, index) {
-                return CardTile();
+                return const CardTile();
               },
             ),
           )
