@@ -1,4 +1,4 @@
-enum Gender { woman, man }
+enum Gender { all, woman, man }
 
 enum Category {
   shirts,

@@ -51,7 +51,7 @@ class _MainScreenState extends State<MainScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: centerTitle,
-        title: Text(appBarTitle, style: theme.textTheme.titleLarge),
+        title: Text(appBarTitle, style: theme.textTheme.headlineLarge),
       ),
       body: _screens[_currentTabIndex],
     );

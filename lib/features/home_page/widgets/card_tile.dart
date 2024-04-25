@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:shop_app/repositories/models/models.dart';
 
-class CardTile extends StatelessWidget {
+class CardTile extends StatefulWidget {
   CardTile({super.key, required this.product, required this.onTap});
 
   final Product product;
   void Function()? onTap;
 
   @override
+  State<CardTile> createState() => _CardTileState();
+}
+
+class _CardTileState extends State<CardTile> {
+  bool isFavorite = false;
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
           margin: const EdgeInsets.all(8),
@@ -20,7 +28,7 @@ class CardTile extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.network(
-                  product.imagePath,
+                  widget.product.imagePath,
                   height: double.infinity,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -31,9 +39,19 @@ class CardTile extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [Icon(Icons.favorite, color: Colors.white)],
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isFavorite = !isFavorite;
+                            });
+                          },
+                          child: Icon(Icons.favorite,
+                              color: isFavorite ? Colors.red : Colors.white),
+                        )
+                      ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,13 +61,13 @@ class CardTile extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                product.title,
+                                widget.product.title,
                                 style: theme.textTheme.titleSmall,
                                 maxLines: 1,
-                                // softWrap: true,
-                                overflow: TextOverflow.clip,
+                                softWrap: true,
+                                overflow: TextOverflow.fade,
                               ),
-                              Text("\$${product.price}",
+                              Text("\$${widget.product.price}",
                                   style: theme.textTheme.titleSmall),
                             ],
                           ),

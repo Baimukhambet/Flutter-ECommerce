@@ -5,6 +5,7 @@ import 'package:shop_app/features/home_page/widgets/my_search_field.dart';
 import 'package:shop_app/features/product_page/product_screen.dart';
 import 'package:shop_app/features/search_page/search_screen.dart';
 import 'package:shop_app/repositories/models/category.dart';
+import 'package:shop_app/repositories/models/product_model.dart';
 import 'package:shop_app/repositories/product_repository.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,20 +18,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> cats = [
-    "All",
-    Gender.woman.toStr(),
-    Gender.man.toStr(),
+  final List<Gender> genders = [
+    Gender.all,
+    Gender.woman,
+    Gender.man,
   ];
 
   final ProductRepository productRepository = ProductRepository();
+  List<Product> currentShowingProducts = [];
 
   int _currentCategoryIndex = 0;
 
-  void _categoryTileTapped(int index) {
+  void _changeGenderCategory(int index) {
     setState(() {
       _currentCategoryIndex = index;
+
+      currentShowingProducts =
+          productRepository.getProductsByGender(genders[index]);
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    currentShowingProducts = productRepository.getAllProducts();
   }
 
   @override
@@ -53,13 +65,15 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Center(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: cats.length,
+                itemCount: genders.length,
                 itemBuilder: (context, index) {
                   final bool active = (index == _currentCategoryIndex);
                   return CategoryTile(
-                    title: cats[index],
+                    title: genders[index].toStr(),
                     isActive: active,
-                    onTap: () => _categoryTileTapped(index),
+                    onTap: () {
+                      _changeGenderCategory(index);
+                    },
                   );
                 },
               ),
@@ -69,14 +83,14 @@ class _HomeScreenState extends State<HomeScreen> {
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, childAspectRatio: 0.7),
-              itemCount: productRepository.getProducts().length,
+              itemCount: currentShowingProducts.length,
               itemBuilder: (context, index) {
-                final product = productRepository.getProducts()[index];
                 return CardTile(
-                  product: product,
+                  product: currentShowingProducts[index],
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ProductScreen(product: product),
+                      builder: (context) =>
+                          ProductScreen(product: currentShowingProducts[index]),
                     ));
                   },
                 );

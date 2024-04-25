@@ -20,9 +20,13 @@ class ProductScreen extends StatelessWidget {
             children: [
               Expanded(
                   child: Container(
-                      child:
-                          Image.network(product.imagePath, fit: BoxFit.cover))),
-              SizedBox(height: 26),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(product.imagePath,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity)))),
+              const SizedBox(height: 26),
               Expanded(
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
