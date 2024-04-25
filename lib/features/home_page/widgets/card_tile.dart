@@ -1,52 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/repositories/models/models.dart';
 
 class CardTile extends StatelessWidget {
-  const CardTile({super.key});
+  CardTile({super.key, required this.product, required this.onTap});
+
+  final Product product;
+  void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-        margin: const EdgeInsets.all(16),
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                'https://www.rollingstone.com/wp-content/uploads/2022/08/dua-lipa.jpg?w=1600&h=900&crop=1',
-                height: double.infinity,
-                // width: double.infinity,
-                fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+          margin: const EdgeInsets.all(8),
+          child: Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  product.imagePath,
+                  height: double.infinity,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [Icon(Icons.favorite, color: Colors.white)],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Dua Lipa", style: theme.textTheme.titleMedium),
-                          Text("\$100", style: theme.textTheme.titleMedium),
-                        ],
-                      ),
-                      const Icon(Icons.shopping_bag_rounded,
-                          color: Colors.white)
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ],
-        ));
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [Icon(Icons.favorite, color: Colors.white)],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                product.title,
+                                style: theme.textTheme.titleSmall,
+                                maxLines: 1,
+                                // softWrap: true,
+                                overflow: TextOverflow.clip,
+                              ),
+                              Text("\$${product.price}",
+                                  style: theme.textTheme.titleSmall),
+                            ],
+                          ),
+                        ),
+                        const Icon(Icons.shopping_bag_rounded,
+                            color: Colors.white)
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          )),
+    );
   }
 }
