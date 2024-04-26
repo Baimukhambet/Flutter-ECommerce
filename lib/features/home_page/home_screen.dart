@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/features/home_page/widgets/card_tile.dart';
 import 'package:shop_app/features/home_page/widgets/category_tile.dart';
 import 'package:shop_app/features/home_page/widgets/my_search_field.dart';
@@ -7,6 +8,7 @@ import 'package:shop_app/features/search_page/search_screen.dart';
 import 'package:shop_app/repositories/models/category.dart';
 import 'package:shop_app/repositories/models/product_model.dart';
 import 'package:shop_app/repositories/product_repository.dart';
+import 'package:shop_app/repositories/providers/cart_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({
@@ -87,6 +89,11 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 return CardTile(
                   product: currentShowingProducts[index],
+                  onBagTap: () {
+                    final provider =
+                        Provider.of<CartProvider>(context, listen: false);
+                    provider.addToCart(currentShowingProducts[index]);
+                  },
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>

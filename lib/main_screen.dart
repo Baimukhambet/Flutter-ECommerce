@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/features/cart_page/cart_screen.dart';
 import 'package:shop_app/features/categories_page/categories_screen.dart';
 import 'package:shop_app/features/favorites_page/favorites_screen.dart';
 import 'package:shop_app/features/home_page/home_screen.dart';
 import 'package:shop_app/features/home_page/widgets/navigation_bar.dart';
 import 'package:shop_app/features/profile_page/profile_screen.dart';
+import 'package:shop_app/repositories/providers/cart_provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -23,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   int _currentTabIndex = 0;
-  String appBarTitle = "Snapbar";
+  String appBarTitle = "SHOPPY";
   bool centerTitle = false;
 
   void _tabChanged(int index) {
@@ -32,8 +34,11 @@ class _MainScreenState extends State<MainScreen> {
       if (index == 1) {
         appBarTitle = "Categories";
         centerTitle = true;
+      } else if (index == 3) {
+        appBarTitle = "Cart";
+        centerTitle = true;
       } else {
-        appBarTitle = "Snapbar";
+        appBarTitle = "SHOPPY";
         centerTitle = false;
       }
     });

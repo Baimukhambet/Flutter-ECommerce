@@ -1,12 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shop_app/repositories/models/models.dart';
 
 class CardTile extends StatefulWidget {
-  CardTile({super.key, required this.product, required this.onTap});
+  CardTile(
+      {super.key, required this.product, required this.onTap, this.onBagTap});
 
   final Product product;
   void Function()? onTap;
+  void Function()? onBagTap;
 
   @override
   State<CardTile> createState() => _CardTileState();
@@ -72,8 +75,11 @@ class _CardTileState extends State<CardTile> {
                             ],
                           ),
                         ),
-                        const Icon(Icons.shopping_bag_rounded,
-                            color: Colors.white)
+                        GestureDetector(
+                          onTap: widget.onBagTap,
+                          child: const Icon(Icons.shopping_bag_rounded,
+                              color: Colors.white),
+                        )
                       ],
                     ),
                   ],

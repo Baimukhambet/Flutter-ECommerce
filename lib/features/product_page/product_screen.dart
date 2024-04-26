@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/repositories/models/models.dart';
+import 'package:shop_app/repositories/providers/cart_provider.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen({super.key, required this.product});
@@ -10,6 +12,7 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final provider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
           title: Text('Product Details', style: theme.textTheme.headlineLarge)),
@@ -58,7 +61,9 @@ class ProductScreen extends StatelessWidget {
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          provider.addToCart(product);
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black,
                           foregroundColor: Colors.white,
