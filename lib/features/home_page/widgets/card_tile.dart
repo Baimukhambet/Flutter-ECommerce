@@ -5,18 +5,31 @@ import 'package:shop_app/repositories/models/models.dart';
 
 class CardTile extends StatefulWidget {
   CardTile(
-      {super.key, required this.product, required this.onTap, this.onBagTap});
+      {super.key,
+      required this.product,
+      required this.onTap,
+      this.onBagTap,
+      required this.onHeartTap,
+      required this.isFavorite,
+      required this.isInCart});
 
   final Product product;
   void Function()? onTap;
   void Function()? onBagTap;
+  void Function()? onHeartTap;
+  final bool isFavorite;
+  final bool isInCart;
 
   @override
   State<CardTile> createState() => _CardTileState();
 }
 
 class _CardTileState extends State<CardTile> {
-  bool isFavorite = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +59,11 @@ class _CardTileState extends State<CardTile> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isFavorite = !isFavorite;
-                            });
-                          },
+                          onTap: widget.onHeartTap,
                           child: Icon(Icons.favorite,
-                              color: isFavorite ? Colors.red : Colors.white),
+                              color: widget.isFavorite
+                                  ? Colors.red
+                                  : Colors.black),
                         )
                       ],
                     ),
@@ -67,7 +78,7 @@ class _CardTileState extends State<CardTile> {
                                 widget.product.title,
                                 style: theme.textTheme.titleSmall,
                                 maxLines: 1,
-                                softWrap: true,
+                                // softWrap: true,
                                 overflow: TextOverflow.fade,
                               ),
                               Text("\$${widget.product.price}",
@@ -77,8 +88,9 @@ class _CardTileState extends State<CardTile> {
                         ),
                         GestureDetector(
                           onTap: widget.onBagTap,
-                          child: const Icon(Icons.shopping_bag_rounded,
-                              color: Colors.white),
+                          child: Icon(Icons.shopping_bag_rounded,
+                              color:
+                                  widget.isInCart ? Colors.red : Colors.black),
                         )
                       ],
                     ),

@@ -8,7 +8,7 @@ final theme = ThemeData(
       //H7
       titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       titleSmall: TextStyle(
-          fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
+          fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
 
       //H4
       headlineLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

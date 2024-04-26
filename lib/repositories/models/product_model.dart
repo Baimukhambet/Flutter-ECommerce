@@ -7,6 +7,7 @@ class Product {
   final String imagePath;
   final Category category;
   final Gender? gender;
+  final List<String> sizes;
 
   Product({
     required this.title,
@@ -15,5 +16,8 @@ class Product {
     required this.imagePath,
     required this.category,
     this.gender,
+    required this.sizes,
   });
+
+  operator ==(p) => (p as Product).title == title;
 }

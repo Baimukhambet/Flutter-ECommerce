@@ -49,63 +49,68 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        children: [
-          MySearchField(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => SearchScreen(),
-              ));
-            },
-            readOnly: true,
-          ),
-          SizedBox(
-            // padding: EdgeInsets.only(left: 8),
-            height: 72,
-            child: Center(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: genders.length,
+    // final provider = Provider.of<CartProvider>(context, listen: false);
+    return Consumer<CartProvider>(builder: (context, provider, child) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          children: [
+            MySearchField(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => SearchScreen(),
+                ));
+              },
+              readOnly: true,
+            ),
+            SizedBox(
+              // padding: EdgeInsets.only(left: 8),
+              height: 72,
+              child: Center(
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: genders.length,
+                  itemBuilder: (context, index) {
+                    final bool active = (index == _currentCategoryIndex);
+                    return CategoryTile(
+                      title: genders[index].toStr(),
+                      isActive: active,
+                      onTap: () {
+                        _changeGenderCategory(index);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+            Flexible(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, childAspectRatio: 0.7),
+                itemCount: currentShowingProducts.length,
                 itemBuilder: (context, index) {
-                  final bool active = (index == _currentCategoryIndex);
-                  return CategoryTile(
-                    title: genders[index].toStr(),
-                    isActive: active,
-                    onTap: () {
-                      _changeGenderCategory(index);
+                  final product = currentShowingProducts[index];
+                  return CardTile(
+                    product: product,
+                    onHeartTap: () => provider.addToFavorites(product),
+                    onBagTap: () {
+                      provider.addToCart(product);
                     },
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ProductScreen(
+                            product: currentShowingProducts[index]),
+                      ));
+                    },
+                    isFavorite: provider.isFavorite(product),
+                    isInCart: provider.isInCart(product),
                   );
                 },
               ),
-            ),
-          ),
-          Flexible(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, childAspectRatio: 0.7),
-              itemCount: currentShowingProducts.length,
-              itemBuilder: (context, index) {
-                return CardTile(
-                  product: currentShowingProducts[index],
-                  onBagTap: () {
-                    final provider =
-                        Provider.of<CartProvider>(context, listen: false);
-                    provider.addToCart(currentShowingProducts[index]);
-                  },
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          ProductScreen(product: currentShowingProducts[index]),
-                    ));
-                  },
-                );
-              },
-            ),
-          )
-        ],
-      ),
-    );
+            )
+          ],
+        ),
+      );
+    });
   }
 }

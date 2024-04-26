@@ -3,9 +3,20 @@ import 'package:shop_app/repositories/models/product_model.dart';
 
 class CartProvider extends ChangeNotifier {
   final Map<Product, int> _cart = {};
+  final List<Product> _favorites = [];
 
   void addToCart(Product product) {
     _cart.addEntries((<Product, int>{product: 1}).entries);
+    notifyListeners();
+  }
+
+  void addToFavorites(Product product) {
+    _favorites.add(product);
+    notifyListeners();
+  }
+
+  void removeFromFavorites(Product product) {
+    _favorites.remove(product);
     notifyListeners();
   }
 
@@ -24,6 +35,14 @@ class CartProvider extends ChangeNotifier {
       _cart[product] = _cart[product]! - 1;
       notifyListeners();
     }
+  }
+
+  bool isFavorite(Product product) {
+    return _favorites.contains(product);
+  }
+
+  bool isInCart(Product product) {
+    return _cart.containsKey(product);
   }
 
   List<Product> get cartEntries => _cart.keys.toList();

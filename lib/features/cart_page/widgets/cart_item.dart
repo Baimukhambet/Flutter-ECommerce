@@ -73,7 +73,7 @@ class CartItem extends StatelessWidget {
                         icon: Icon(Icons.add_circle_outline))
                   ],
                 ),
-                Text('\$${product.price}')
+                Text('\$${product.price * count}')
               ],
             ),
           )
