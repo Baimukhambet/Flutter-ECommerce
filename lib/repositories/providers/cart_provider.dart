@@ -11,6 +11,11 @@ class CartProvider extends ChangeNotifier {
   }
 
   void addToFavorites(Product product) {
+    if (_favorites.contains(product)) {
+      removeFromFavorites(product);
+      return;
+    }
+
     _favorites.add(product);
     notifyListeners();
   }

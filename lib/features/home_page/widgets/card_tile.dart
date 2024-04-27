@@ -62,7 +62,7 @@ class _CardTileState extends State<CardTile> {
                           onTap: widget.onHeartTap,
                           child: Icon(Icons.favorite,
                               color: widget.isFavorite
-                                  ? Colors.red
+                                  ? Colors.red[700]
                                   : Colors.black),
                         )
                       ],
@@ -89,8 +89,9 @@ class _CardTileState extends State<CardTile> {
                         GestureDetector(
                           onTap: widget.onBagTap,
                           child: Icon(Icons.shopping_bag_rounded,
-                              color:
-                                  widget.isInCart ? Colors.red : Colors.black),
+                              color: widget.isInCart
+                                  ? Color.fromARGB(255, 67, 91, 227)
+                                  : Colors.black),
                         )
                       ],
                     ),

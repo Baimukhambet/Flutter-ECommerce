@@ -24,7 +24,7 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 6, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: Colors.white,
@@ -56,24 +56,26 @@ class CartItem extends StatelessWidget {
                   children: [
                     Flexible(
                         child: Text(product.title,
-                            style: TextStyle(overflow: TextOverflow.ellipsis))),
-                    IconButton(onPressed: onRemove, icon: Icon(Icons.close))
+                            style: const TextStyle(
+                                overflow: TextOverflow.ellipsis))),
+                    IconButton(
+                        onPressed: onRemove, icon: const Icon(Icons.close))
                   ],
                 ),
-                Text('Color/  |  Size/'),
+                const Text('Color/  |  Size/'),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     IconButton(
                         onPressed: onDecrement,
-                        icon: Icon(Icons.remove_circle_outline)),
+                        icon: const Icon(Icons.remove_circle_outline)),
                     Text("$count"),
                     IconButton(
                         onPressed: onIncrement,
-                        icon: Icon(Icons.add_circle_outline))
+                        icon: const Icon(Icons.add_circle_outline))
                   ],
                 ),
-                Text('\$${product.price * count}')
+                Text('\$${(product.price * count).toStringAsFixed(2)}')
               ],
             ),
           )

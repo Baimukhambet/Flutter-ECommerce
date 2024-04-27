@@ -19,5 +19,9 @@ class Product {
     required this.sizes,
   });
 
-  operator ==(p) => (p as Product).title == title;
+  @override
+  bool operator ==(p) => (p as Product).title == title;
+
+  @override
+  int get hashCode => Object.hash(title, description);
 }

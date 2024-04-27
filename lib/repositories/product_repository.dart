@@ -35,7 +35,7 @@ class ProductRepository {
         price: 49.99,
         imagePath:
             'https://static.zara.net/assets/public/ab3c/0d8c/5ee746fea91a/159369bcf023/06462410800-e1/06462410800-e1.jpg?ts=1699950969253&w=850',
-        category: Category.shirts,
+        category: Category.hoodies,
         gender: Gender.man,
         sizes: ['39', '40', '41', '42', '43', '44']),
     Product(

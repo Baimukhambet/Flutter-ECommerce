@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/features/home_page/widgets/widgets.dart';
 import 'package:shop_app/features/product_page/widgets/size_tile.dart';
 import 'package:shop_app/repositories/models/models.dart';
 import 'package:shop_app/repositories/providers/cart_provider.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class ProductScreen extends StatefulWidget {
   ProductScreen({super.key, required this.product});
@@ -99,6 +101,11 @@ class _ProductScreenState extends State<ProductScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           provider.addToCart(widget.product);
+                          showTopSnackBar(
+                              Overlay.of(context),
+                              displayDuration:
+                                  const Duration(milliseconds: 400),
+                              const OverlayMessage(text: 'Added To Cart'));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black,
