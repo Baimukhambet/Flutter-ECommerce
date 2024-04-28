@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/features/cart_page/cart_screen.dart';
 import 'package:shop_app/features/categories_page/categories_screen.dart';
-import 'package:shop_app/features/favorites_page/favorites_screen.dart';
+import 'package:shop_app/features/favorites_page/screens/favorites_screen.dart';
 import 'package:shop_app/features/home_page/home_screen.dart';
 import 'package:shop_app/features/home_page/widgets/navigation_bar.dart';
 import 'package:shop_app/features/profile_page/profile_screen.dart';
-import 'package:shop_app/repositories/providers/cart_provider.dart';
+import 'package:shop_app/repositories/providers/tab_manager.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -30,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
 
   void _tabChanged(int index) {
     setState(() {
-      _currentTabIndex = index;
+      Provider.of<TabManager>(context, listen: false).changeCurrentTab(index);
       if (index == 1) {
         appBarTitle = "Categories";
         centerTitle = true;
@@ -48,17 +48,22 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final theme = Theme.of(context);
-    return Scaffold(
-      bottomNavigationBar: MyNavBar(
-        onTabChange: _tabChanged,
+    return Consumer<TabManager>(
+      builder: (context, manager, child) => Scaffold(
+        bottomNavigationBar: MyNavBar(
+          onTabChange: _tabChanged,
+        ),
+        appBar: AppBar(
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          centerTitle: centerTitle,
+          title: Text(appBarTitle, style: theme.textTheme.headlineLarge),
+        ),
+        body: IndexedStack(
+          index: manager.currentTabIndex,
+          children: _screens,
+        ),
       ),
-      appBar: AppBar(
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        centerTitle: centerTitle,
-        title: Text(appBarTitle, style: theme.textTheme.headlineLarge),
-      ),
-      body: _screens[_currentTabIndex],
     );
   }
 }

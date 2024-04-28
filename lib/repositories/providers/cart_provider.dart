@@ -50,6 +50,15 @@ class CartProvider extends ChangeNotifier {
     return _cart.containsKey(product);
   }
 
+  double getTotalCart() {
+    double total = 0;
+    _cart.forEach((key, value) {
+      total += key.price * value;
+    });
+    return total;
+  }
+
   List<Product> get cartEntries => _cart.keys.toList();
   Map<Product, int> get cartMap => _cart;
+  List<Product> get favorites => _favorites;
 }
