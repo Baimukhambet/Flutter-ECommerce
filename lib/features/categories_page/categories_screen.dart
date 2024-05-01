@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shop_app/features/categories_page/widgets/category_item.dart';
 import 'package:shop_app/features/list_product_page/list_product_screen.dart';
 import 'package:shop_app/repositories/models/models.dart';
@@ -26,9 +27,7 @@ class CategoriesScreen extends StatelessWidget {
           title: categories[index].toStr(),
           imageUrl: imageUrls[index],
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    ListProductScreen(category: categories[index])));
+            context.pushNamed('/category', pathParameters: {'id': '$index'});
           },
         );
       },

@@ -19,9 +19,9 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
     CategoriesScreen(),
-    FavoritesScreen(),
-    CartScreen(),
-    ProfileScreen()
+    const FavoritesScreen(),
+    const CartScreen(),
+    const ProfileScreen()
   ];
 
   int _currentTabIndex = 0;
@@ -46,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
+    // final screenSize = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Consumer<TabManager>(
       builder: (context, manager, child) => Scaffold(

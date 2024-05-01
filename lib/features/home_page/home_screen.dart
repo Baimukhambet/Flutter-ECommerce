@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/features/home_page/widgets/overlay_message.dart';
 import 'package:shop_app/features/home_page/widgets/widgets.dart';
-import 'package:shop_app/features/product_page/product_screen.dart';
 import 'package:shop_app/features/search_page/search_screen.dart';
-import 'package:shop_app/repositories/models/category.dart';
-import 'package:shop_app/repositories/models/product_model.dart';
+import 'package:shop_app/repositories/models/models.dart';
 import 'package:shop_app/repositories/product_repository.dart';
 import 'package:shop_app/repositories/providers/cart_provider.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({
+  const HomeScreen({
     super.key,
   });
 
@@ -119,10 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               : const OverlayMessage(text: 'Added To Cart'));
                     },
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ProductScreen(
-                            product: currentShowingProducts[index]),
-                      ));
+                      context.pushNamed('/product',
+                          extra: currentShowingProducts[index]);
                     },
                     isFavorite: provider.isFavorite(product),
                     isInCart: provider.isInCart(product),

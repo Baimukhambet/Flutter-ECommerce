@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/features/favorites_page/widgets/favorite_item.dart';
 import 'package:shop_app/features/product_page/product_screen.dart';
@@ -30,9 +31,10 @@ class FavoritesScreen extends StatelessWidget {
       itemBuilder: (context, index) => FavoriteItem(
         product: products[index],
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ProductScreen(product: products[index]),
-          ));
+          context.pushNamed('/product', extra: products[index]);
+          // Navigator.of(context).push(MaterialPageRoute(
+          //   builder: (context) => ProductScreen(product: products[index]),
+          // ));
         },
         onIconTap: () => onIconTap(products[index]),
       ),

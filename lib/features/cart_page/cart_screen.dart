@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/features/cart_page/widgets/cart_item.dart';
 import 'package:shop_app/features/product_page/product_screen.dart';
@@ -30,9 +31,10 @@ class CartScreen extends StatelessWidget {
                     provider.removeFromCart(products[index]);
                   },
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            ProductScreen(product: products[index])));
+                    context.pushNamed('/product', extra: products[index]);
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) =>
+                    //         ProductScreen(product: products[index])));
                   },
                 ),
               ),
@@ -50,7 +52,7 @@ class CartScreen extends StatelessWidget {
                   elevation: 0,
                 ),
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 14),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
                   child: const Text('Checkout',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),

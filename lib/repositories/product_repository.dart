@@ -3,6 +3,7 @@ import 'package:shop_app/repositories/models/models.dart';
 class ProductRepository {
   final List<Product> _products = [
     Product(
+        id: 1,
         title: "HOODED Technical JACKET",
         description:
             "Jacket made of technical fabric. High neck with adjustable drawstring hood. Long sleeves with ribbed cuffs. Chest welt pocket and hip patch pockets. Interior pocket detail. Adjustable hem with elastic at the sides. Front zip fastening hidden by a snap-button placket.",
@@ -12,6 +13,7 @@ class ProductRepository {
         gender: Gender.man,
         sizes: ['39', '40', '41', '42', '43', '44']),
     Product(
+        id: 2,
         title: "Basic Slim Fit T-Shirt",
         description: "Dua Dua my Dua lipa!",
         price: 100,
@@ -21,6 +23,7 @@ class ProductRepository {
         gender: Gender.man,
         sizes: ['39', '40', '41', '42', '43', '44']),
     Product(
+        id: 3,
         title: "BASIC MEDIUM WEIGHT T-SHIRT",
         description:
             "Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!Dua Dua my Dua lipa!",
@@ -30,6 +33,7 @@ class ProductRepository {
         gender: Gender.man,
         sizes: ['39', '40', '41', '42', '43', '44']),
     Product(
+        id: 4,
         title: "QUARTER-ZIP SWEATSHIRT",
         description: "Long sleeve quarter-zip sweatshirt. Ribbed trims.",
         price: 49.99,
@@ -39,6 +43,7 @@ class ProductRepository {
         gender: Gender.man,
         sizes: ['39', '40', '41', '42', '43', '44']),
     Product(
+        id: 5,
         title: "SHORT SLEEVE INTERLOCK T-SHIRT",
         description:
             "T-shirt made of stretchy and flexible knit fabric with a compact, soft and opaque weave.",
@@ -48,6 +53,7 @@ class ProductRepository {
         gender: Gender.woman,
         sizes: ['39', '40', '41', '42', '43', '44']),
     Product(
+        id: 6,
         title: "COTTON T-SHIRT WITH ENZYME FINISH",
         description:
             "T-shirt made of cotton yarn with enzyme finish. Round collar and short sleeves.",
