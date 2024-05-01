@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/features/home_page/home_page.dart';
 import 'package:shop_app/repositories/providers/cart_provider.dart';
+import 'package:shop_app/repositories/providers/favorites_provider.dart';
 import 'package:shop_app/repositories/providers/tab_manager.dart';
 import 'package:shop_app/router/my_router.dart';
 import 'package:shop_app/theme/theme.dart';
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => CartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FavoritesProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => TabManager(),

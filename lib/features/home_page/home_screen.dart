@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/features/home_page/widgets/widgets.dart';
-import 'package:shop_app/features/search_page/search_screen.dart';
 import 'package:shop_app/repositories/models/models.dart';
 import 'package:shop_app/repositories/product_repository.dart';
 import 'package:shop_app/repositories/providers/cart_provider.dart';
+import 'package:shop_app/repositories/providers/favorites_provider.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Gender.man,
   ];
 
-  final ProductRepository productRepository = ProductRepository();
+  final ProductRepository productRepository = ProductRepository.shared;
   List<Product> currentShowingProducts = [];
 
   int _currentCategoryIndex = 0;
@@ -47,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final provider = Provider.of<CartProvider>(context, listen: false);
     return Consumer<CartProvider>(builder: (context, provider, child) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -55,9 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             MySearchField(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => SearchScreen(),
-                ));
+                // context.go('/search');
+                context.pushNamed('/search');
               },
               readOnly: true,
             ),
@@ -88,40 +86,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: currentShowingProducts.length,
                 itemBuilder: (context, index) {
                   final product = currentShowingProducts[index];
-                  return CardTile(
-                    product: product,
-                    onHeartTap: () {
-                      final isFavorite = provider.isFavorite(product);
-                      isFavorite
-                          ? provider.removeFromFavorites(product)
-                          : provider.addToFavorites(product);
-                      showTopSnackBar(
-                          displayDuration: const Duration(milliseconds: 300),
-                          Overlay.of(context),
-                          isFavorite
-                              ? const OverlayMessage(
-                                  text: 'Removed From Wishlist')
-                              : const OverlayMessage(
-                                  text: 'Added To Wishlist'));
-                    },
-                    onBagTap: () {
-                      final isInCart = provider.isInCart(product);
-                      isInCart
-                          ? provider.removeFromCart(product)
-                          : provider.addToCart(product);
-                      showTopSnackBar(
-                          displayDuration: const Duration(milliseconds: 300),
-                          Overlay.of(context),
-                          isInCart
-                              ? const OverlayMessage(text: 'Removed From Cart')
-                              : const OverlayMessage(text: 'Added To Cart'));
-                    },
-                    onTap: () {
-                      context.pushNamed('/product',
-                          extra: currentShowingProducts[index]);
-                    },
-                    isFavorite: provider.isFavorite(product),
-                    isInCart: provider.isInCart(product),
+                  return Consumer<FavoritesProvider>(
+                    builder: (context, favoritesProvider, child) => CardTile(
+                      product: product,
+                      onHeartTap: () {
+                        final isFavorite =
+                            favoritesProvider.isFavorite(product);
+                        isFavorite
+                            ? favoritesProvider.removeFromFavorites(product)
+                            : favoritesProvider.addToFavorites(product);
+                        showTopSnackBar(
+                            displayDuration: const Duration(milliseconds: 300),
+                            Overlay.of(context),
+                            isFavorite
+                                ? const OverlayMessage(
+                                    text: 'Removed From Wishlist')
+                                : const OverlayMessage(
+                                    text: 'Added To Wishlist'));
+                      },
+                      onBagTap: () {
+                        final isInCart = provider.isInCart(product);
+                        isInCart
+                            ? provider.removeFromCart(product)
+                            : provider.addToCart(product);
+                        showTopSnackBar(
+                            displayDuration: const Duration(milliseconds: 300),
+                            Overlay.of(context),
+                            isInCart
+                                ? const OverlayMessage(
+                                    text: 'Removed From Cart')
+                                : const OverlayMessage(text: 'Added To Cart'));
+                      },
+                      onTap: () {
+                        context.pushNamed('/product',
+                            extra: currentShowingProducts[index]);
+                      },
+                      isFavorite: favoritesProvider.isFavorite(product),
+                      isInCart: provider.isInCart(product),
+                    ),
                   );
                 },
               ),

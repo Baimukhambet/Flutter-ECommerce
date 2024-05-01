@@ -5,6 +5,7 @@ import 'package:shop_app/features/favorites_page/widgets/favorite_item.dart';
 import 'package:shop_app/features/product_page/product_screen.dart';
 import 'package:shop_app/repositories/models/product_model.dart';
 import 'package:shop_app/repositories/providers/cart_provider.dart';
+import 'package:shop_app/repositories/providers/favorites_provider.dart';
 import 'package:shop_app/repositories/providers/tab_manager.dart';
 
 class FavoritesScreen extends StatelessWidget {
@@ -12,11 +13,12 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CartProvider>(
+    return Consumer<FavoritesProvider>(
       builder: (context, provider, child) {
-        final onIconTap = (Product product) {
+        onIconTap(Product product) {
           provider.removeFromFavorites(product);
-        };
+        }
+
         return provider.favorites.isNotEmpty
             ? _buildFavoritesScreen(context, provider.favorites, onIconTap)
             : _buildEmptyFavoritesScreen(context);

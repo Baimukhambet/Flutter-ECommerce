@@ -1,6 +1,10 @@
 import 'package:shop_app/repositories/models/models.dart';
 
 class ProductRepository {
+  static final ProductRepository shared = ProductRepository._constructor();
+
+  ProductRepository._constructor();
+
   final List<Product> _products = [
     Product(
         id: 1,
@@ -77,5 +81,13 @@ class ProductRepository {
 
   List<Product> getProductsByCategory(Category category) {
     return _products.where((element) => element.category == category).toList();
+  }
+
+  List<Product> getProductById(int id) {
+    return _products.where((product) => product.id == id).toList();
+  }
+
+  List<Product> getProductsByIds(List<int> ids) {
+    return _products.where((product) => ids.contains(product.id)).toList();
   }
 }

@@ -13,7 +13,7 @@ class ListProductScreen extends StatefulWidget {
 }
 
 class _ListProductScreenState extends State<ListProductScreen> {
-  ProductRepository _productRepository = ProductRepository();
+  final ProductRepository _productRepository = ProductRepository.shared;
   List<Product> products = [];
 
   @override

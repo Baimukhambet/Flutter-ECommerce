@@ -1,32 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/repositories/models/models.dart';
 import 'package:shop_app/repositories/models/product_model.dart';
+import 'package:shop_app/repositories/product_repository.dart';
+import 'package:shop_app/repositories/sql_manager.dart';
 
 class CartProvider extends ChangeNotifier {
-  final Map<Product, int> _cart = {};
-  final List<Product> _favorites = [];
+  Map<Product, int> _cart = {};
 
-  void addToCart(Product product) {
+  final ProductRepository productRepository = ProductRepository.shared;
+
+  CartProvider() {
+    fetchCart();
+  }
+
+  void addToCart(Product product) async {
     _cart.addEntries((<Product, int>{product: 1}).entries);
+    await SQLManager.addToCart(product.id);
     notifyListeners();
   }
 
-  void addToFavorites(Product product) {
-    if (_favorites.contains(product)) {
-      removeFromFavorites(product);
-      return;
-    }
-
-    _favorites.add(product);
-    notifyListeners();
-  }
-
-  void removeFromFavorites(Product product) {
-    _favorites.remove(product);
-    notifyListeners();
-  }
-
-  void removeFromCart(Product product) {
+  void removeFromCart(Product product) async {
     _cart.remove(product);
+    await SQLManager.removeFromCart(product.id);
     notifyListeners();
   }
 
@@ -42,8 +37,14 @@ class CartProvider extends ChangeNotifier {
     }
   }
 
-  bool isFavorite(Product product) {
-    return _favorites.contains(product);
+  void fetchCart() async {
+    final data = await SQLManager.getCart();
+    if (data.isNotEmpty) {
+      final ids = data.map((e) => e['id'] as int).toList();
+      final products = productRepository.getProductsByIds(ids);
+      _cart.addEntries(products.map((p) => MapEntry(p, 1)));
+    }
+    notifyListeners();
   }
 
   bool isInCart(Product product) {
@@ -60,5 +61,4 @@ class CartProvider extends ChangeNotifier {
 
   List<Product> get cartEntries => _cart.keys.toList();
   Map<Product, int> get cartMap => _cart;
-  List<Product> get favorites => _favorites;
 }
